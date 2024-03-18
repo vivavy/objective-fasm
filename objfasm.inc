@@ -51,6 +51,7 @@ macro CONST line& {
     \}
 }
 
+
 macro !e line& {
     local matched
     local matched2

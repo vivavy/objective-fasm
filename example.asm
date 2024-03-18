@@ -4,6 +4,7 @@ include "objfasm.inc"
 
 entry _start
 
+
 segment executable readable writeable
 
 STRUCT str
