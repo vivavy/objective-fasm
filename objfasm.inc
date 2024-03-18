@@ -52,7 +52,7 @@ macro CONST line& {
 }
 
 
-macro !e line& {
+macro ! line& {
     local matched
     local matched2
     match d==s, line \{
@@ -61,12 +61,28 @@ macro !e line& {
             matched2 equ 1
             mget d, \\this\\#.\\#member
         \\}
-        match this=-=>=[member=], s \\{
+        match this=-=>=*member, s \\{
             matched2 equ 1
             mget d, [\\#this\\#.\\#member]
         \\}
         if ~defined matched2
             mov d, s
+        end if
+    \}
+    match d=&s, line \{
+        matched equ 1
+        match this=-=>member, s \\{
+            matched2 equ 1
+            mget edi, \\this\\#.\\#member
+            and d, edi
+        \\}
+        match this=-=>=*member, s \\{
+            matched2 equ 1
+            mget edi, [\\#this\\#.\\#member]
+            and d, edi
+        \\}
+        if ~defined matched2
+            and d, s
         end if
     \}
     if ~defined matched
