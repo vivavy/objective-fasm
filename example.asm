@@ -17,7 +17,7 @@ ENDS
 ;END
 
 _start:
-    ! esp & 0xFFFFFFFFFFFFFFF0
+    ! esp & 0xFFFFFFF0
     CALL main(0, 0)
     ! ebx = eax
     ! eax = 1
@@ -33,7 +33,8 @@ FN print(string)
         string_ str
     end virtual
     ! ecx = string->data
-    ! edx = *string->length
+    ! edx = string->length
+    ! edx = [edx]
     mov eax, 4
     mov ebx, 1
     int 0x80

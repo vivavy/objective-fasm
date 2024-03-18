@@ -3,6 +3,17 @@ include 'proc32.inc'
 macro END {
 }
 
+macro mget dest, src {
+    match this=-=>member, src \{
+        matched equ 1
+        mov dest, \#this\#.\#member
+    \}
+    if ~defined matched
+        display "Error: Invalid member reference"
+        err
+    end if
+}
+
 ENDS fix }
 
 macro MEMBER line& {
@@ -59,11 +70,7 @@ macro ! line& {
         matched equ 1
         match this=-=>member, s \\{
             matched2 equ 1
-            mget d, \\this\\#.\\#member
-        \\}
-        match this=-=>=*member, s \\{
-            matched2 equ 1
-            mget d, [\\#this\\#.\\#member]
+            mget d, \\this\\#->\\#member
         \\}
         if ~defined matched2
             mov d, s
@@ -73,12 +80,7 @@ macro ! line& {
         matched equ 1
         match this=-=>member, s \\{
             matched2 equ 1
-            mget edi, \\this\\#.\\#member
-            and d, edi
-        \\}
-        match this=-=>=*member, s \\{
-            matched2 equ 1
-            mget edi, [\\#this\\#.\\#member]
+            mget edi, \\this\\#->\\#member
             and d, edi
         \\}
         if ~defined matched2
