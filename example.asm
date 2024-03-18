@@ -1,6 +1,6 @@
 format ELF executable 3
 
-include "objfasm.inc"
+include "objfasm32.inc"
 
 entry _start
 
